@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/prisma.service';
+import { CreateSubtaskDto } from 'src/dtos/create-subtask-dto';
 import { CreateTaskDto } from 'src/dtos/create-task-dto';
 import { DeleteTaskDto } from 'src/dtos/delete-task-dto';
 import { UpdateTaskDto } from 'src/dtos/update-task.dto';
@@ -27,7 +28,11 @@ export class TaskRepository {
 
   async getAll() {
     try {
-      const tasks = await this.prisma.task.findMany();
+      const tasks = await this.prisma.task.findMany({
+        include: {
+          subTasks: true,
+        },
+      });
       return tasks;
     } catch (error) {
       throw new HttpException(
@@ -67,6 +72,24 @@ export class TaskRepository {
       });
       return task;
     } catch (error) {
+      throw new HttpException(
+        'Error, try again later',
+        HttpStatus.EXPECTATION_FAILED,
+      );
+    }
+  }
+
+  async createSubtask({ taskId, title }: CreateSubtaskDto) {
+    try {
+      const subtask = await this.prisma.subtask.create({
+        data: {
+          taskId,
+          title,
+        },
+      });
+      return subtask;
+    } catch (error) {
+      console.log(error);
       throw new HttpException(
         'Error, try again later',
         HttpStatus.EXPECTATION_FAILED,

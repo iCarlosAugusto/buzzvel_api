@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { CreateTaskDto } from './dtos/create-task-dto';
 import { DeleteTaskDto } from './dtos/delete-task-dto';
 import { UpdateTaskDto } from './dtos/update-task.dto';
+import { CreateSubtaskDto } from './dtos/create-subtask-dto';
 
 @Controller('task')
 export class AppController {
@@ -31,5 +32,10 @@ export class AppController {
   @Post('/update')
   update(@Body() updateTaskDto: UpdateTaskDto) {
     return this.appService.update(updateTaskDto);
+  }
+
+  @Post('/createSubtask')
+  createSubtask(@Body() createSubtaskDto: CreateSubtaskDto) {
+    return this.appService.createSubtask(createSubtaskDto);
   }
 }

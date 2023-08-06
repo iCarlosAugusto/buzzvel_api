@@ -13,4 +13,13 @@ model Task {
   title   String
   message String
   isDone Boolean @default(false)
+  subTasks Subtask[]
+}
+
+model Subtask {
+  id  String @id @default(uuid())
+  taskId String 
+  task Task  @relation(fields: [taskId], references: [id])
+  title String
+  createdAt DateTime @default(now())
 }
