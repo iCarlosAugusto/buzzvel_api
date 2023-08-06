@@ -53,7 +53,7 @@ export class TaskRepository {
     }
   }
 
-  async update({ id, title, message }: UpdateTaskDto) {
+  async update({ id, title, message, isDone }: UpdateTaskDto) {
     try {
       const task = await this.prisma.task.update({
         where: {
@@ -62,6 +62,7 @@ export class TaskRepository {
         data: {
           title,
           message,
+          isDone,
         },
       });
       return task;
