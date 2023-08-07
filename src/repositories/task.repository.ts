@@ -3,6 +3,7 @@ import { PrismaService } from 'src/common/prisma.service';
 import { CreateSubtaskDto } from 'src/dtos/create-subtask-dto';
 import { CreateTaskDto } from 'src/dtos/create-task-dto';
 import { DeleteTaskDto } from 'src/dtos/delete-task-dto';
+import { GetAllTasksDto } from 'src/dtos/get-all-tasks.dto';
 import { UpdateTaskDto } from 'src/dtos/update-task.dto';
 
 @Injectable()
@@ -26,11 +27,15 @@ export class TaskRepository {
     }
   }
 
-  async getAll() {
+  async getAll({ isDone }: GetAllTasksDto) {
+    const isTrue = isDone === undefined ? undefined : isDone === 'true';
     try {
       const tasks = await this.prisma.task.findMany({
         include: {
           subTasks: true,
+        },
+        where: {
+          isDone: isTrue,
         },
       });
       return tasks;

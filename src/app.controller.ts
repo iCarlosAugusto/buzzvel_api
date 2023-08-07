@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateTaskDto } from './dtos/create-task-dto';
 import { DeleteTaskDto } from './dtos/delete-task-dto';
 import { UpdateTaskDto } from './dtos/update-task.dto';
 import { CreateSubtaskDto } from './dtos/create-subtask-dto';
+import { GetAllTasksDto } from './dtos/get-all-tasks.dto';
 
 @Controller('task')
 export class AppController {
@@ -20,8 +21,9 @@ export class AppController {
   }
 
   @Get('/getAll')
-  getAll() {
-    return this.appService.getAll();
+  getAll(@Query() query: GetAllTasksDto) {
+    console.log(typeof query.isDone);
+    return this.appService.getAll(query);
   }
 
   @Post('/delete')

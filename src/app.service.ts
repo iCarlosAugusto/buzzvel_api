@@ -4,6 +4,7 @@ import { CreateTaskDto } from './dtos/create-task-dto';
 import { UpdateTaskDto } from './dtos/update-task.dto';
 import { TaskRepository } from './repositories/task.repository';
 import { CreateSubtaskDto } from './dtos/create-subtask-dto';
+import { GetAllTasksDto } from './dtos/get-all-tasks.dto';
 
 @Injectable()
 export class AppService {
@@ -13,8 +14,8 @@ export class AppService {
     return await this.taskRepository.create(data);
   }
 
-  async getAll() {
-    return await this.taskRepository.getAll();
+  async getAll(data: GetAllTasksDto) {
+    return await this.taskRepository.getAll(data);
   }
 
   async delete(data: DeleteTaskDto) {

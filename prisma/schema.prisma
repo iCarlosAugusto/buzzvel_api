@@ -19,7 +19,7 @@ model Task {
 model Subtask {
   id  String @id @default(uuid())
   taskId String 
-  task Task  @relation(fields: [taskId], references: [id])
+  task Task  @relation(fields: [taskId], references: [id], onDelete: Cascade)
   title String
   createdAt DateTime @default(now())
 }
