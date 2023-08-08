@@ -10,12 +10,11 @@ import { UpdateTaskDto } from 'src/dtos/update-task.dto';
 export class TaskRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create({ title, message }: CreateTaskDto) {
+  async create({ title }: CreateTaskDto) {
     try {
       const task = await this.prisma.task.create({
         data: {
           title,
-          message,
         },
       });
       return task;
@@ -71,7 +70,6 @@ export class TaskRepository {
         },
         data: {
           title,
-          message,
           isDone,
         },
       });
